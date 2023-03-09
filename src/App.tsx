@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Route, Routes} from "react-router-dom";
 import {Interface} from "./Components/Interface";
@@ -6,8 +6,18 @@ import Settings from "./Components/Settings";
 
 function App() {
 
-    const [maxValue, setMaxValue] = useState(5)
-    const [startValue, setStartValue] = useState(0)
+
+    let startVstring = localStorage.getItem("startValue")
+    let start = startVstring?JSON.parse(startVstring):5
+
+
+    let maxVstring = localStorage.getItem("maxValue")
+    let max = maxVstring?JSON.parse(maxVstring):0
+
+
+    const [maxValue, setMaxValue] = useState(max)
+    const [startValue, setStartValue] = useState<number>( start)
+
 
     const changeMaxValue = (newValue: number) => {
         setMaxValue(newValue)
@@ -15,7 +25,10 @@ function App() {
     const changeStartValue = (newValue: number) => {
         setStartValue(newValue)
     }
-
+    const setToLocalStorage = ()=>{
+        localStorage.setItem("startValue", JSON.stringify(startValue))
+        localStorage.setItem("maxValue", JSON.stringify(maxValue))
+    }
 
     return (
         <div className="App">
@@ -24,6 +37,7 @@ function App() {
                 <Route path="/Settings" element={<Settings changeMaxValue={changeMaxValue}
                                                            changeStartValue={changeStartValue}
                                                            maxValue={maxValue}
+                                                           setToLocalStorage={setToLocalStorage}
                                                            startValue={startValue}/>}/>
             </Routes>
         </div>
