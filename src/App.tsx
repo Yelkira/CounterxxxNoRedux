@@ -8,11 +8,11 @@ function App() {
 
 
     let startVstring = localStorage.getItem("startValue")
-    let start = startVstring?JSON.parse(startVstring):5
+    let start = startVstring?JSON.parse(startVstring):0
 
 
     let maxVstring = localStorage.getItem("maxValue")
-    let max = maxVstring?JSON.parse(maxVstring):0
+    let max = maxVstring?JSON.parse(maxVstring):5
 
 
     const [maxValue, setMaxValue] = useState(max)
